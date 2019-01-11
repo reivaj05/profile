@@ -1,10 +1,10 @@
 package main
 
 import (
-
 	"github.com/reivaj05/GoConfig"
 	"github.com/reivaj05/GoLogger"
 	"github.com/reivaj05/GoServer"
+	"github.com/reivaj05/profile/auth"
 )
 
 const (
@@ -74,7 +74,7 @@ func process() {
 }
 
 func createEndpoints() (endpoints []*GoServer.Endpoint) {
-	endpoints = append(endpoints, Endpoints...)
+	endpoints = append(endpoints, auth.Endpoints...)
 	return
 }
 
