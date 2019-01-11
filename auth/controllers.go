@@ -3,7 +3,6 @@ package auth
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/reivaj05/GoJSON"
 	"github.com/reivaj05/GoServer"
@@ -11,52 +10,64 @@ import (
 
 func loginHandler(rw http.ResponseWriter, req *http.Request) {
 	fmt.Println("TODO: Implement login")
-	// jsonResponse := createJSONListResponse()
-	// GoServer.SendResponseWithStatus(rw, jsonResponse, http.StatusOK)
+	data, err := getJSONData(req)
+	if err != nil {
+		// GoServer.SendResponseWithStatus(rw, "Error reading data", http.StatusBadRequest)
+		return
+	}
+	if err := validateLoginData(data); err != nil {
+		// GoServer.SendResponseWithStatus(rw, "", http.StatusBadRequest)
+		return
+	}
+	if err := login(data); err != nil {
+		// GoServer.SendResponseWithStatus(rw, "", http.StatusInternalServerError)
+	} else {
+		GoServer.SendResponseWithStatus(rw, "success", http.StatusOK)
+	}
 }
 
-func createJSONListResponse() string {
-	json, _ := GoJSON.New("{}")
-	json.CreateJSONArrayAtPath("data")
-	return json.ToString()
+func validateLoginData(data *GoJSON.JSONWrapper) error {
+	return nil
 }
 
 func logoutHandler(rw http.ResponseWriter, req *http.Request) {
 	fmt.Println("TODO: Implement logout")
-	// json, _ := GoJSON.New("{}")
-	// GoServer.SendResponseWithStatus(rw, json.ToString(), http.StatusOK)
+	if err := logout(); err != nil {
+		// GoServer.SendResponseWithStatus(rw, "", http.StatusInternalServerError)
+	} else {
+		GoServer.SendResponseWithStatus(rw, "success", http.StatusOK)
+	}
 }
 
 func resetPasswordHandler(rw http.ResponseWriter, req *http.Request) {
 	fmt.Println("TODO: Implement reset password")
-	// data, err := getJSONData(req)
-	// if err != nil {
-	// 	sendBadRequestResponse(rw)
-	// 	return
-	// }
-	// if !isDataValid(data) {
-	// 	sendBadRequestResponse(rw)
-	// 	return
-	// }
-	// json, _ := GoJSON.New("{}")
-	// GoServer.SendResponseWithStatus(rw, json.ToString(), http.StatusCreated)
+	if err := resetPassword(); err != nil {
+		// GoServer.SendResponseWithStatus(rw, "", http.StatusInternalServerError)
+	} else {
+		GoServer.SendResponseWithStatus(rw, "success", http.StatusOK)
+	}
 }
 
 func signupHandler(rw http.ResponseWriter, req *http.Request) {
-	// data, err := getJSONData(req)
-	// if err != nil {
-	// 	sendBadRequestResponse(rw)
-	// 	return
-	// }
-	// params := GoServer.GetQueryParams(req)
-	// id, _ := strconv.Atoi(params["id"])
 	fmt.Println("TODO: Implement signup")
-	// if !isDataValid(data) {
-	// 	sendBadRequestResponse(rw)
-	// 	return
-	// }
-	// json, _ := GoJSON.New("{}")
-	// GoServer.SendResponseWithStatus(rw, json.ToString(), http.StatusOK)
+	data, err := getJSONData(req)
+	if err != nil {
+		// GoServer.SendResponseWithStatus(rw, "Error reading data", http.StatusBadRequest)
+		return
+	}
+	if err := validateSignupData(data); err != nil {
+		// GoServer.SendResponseWithStatus(rw, "", http.StatusBadRequest)
+		return
+	}
+	if err := signup(data); err != nil {
+		// GoServer.SendResponseWithStatus(rw, "", http.StatusInternalServerError)
+	} else {
+		GoServer.SendResponseWithStatus(rw, "success", http.StatusOK)
+	}
+}
+
+func validateSignupData(data *GoJSON.JSONWrapper) error {
+	return nil
 }
 
 func getJSONData(req *http.Request) (data *GoJSON.JSONWrapper, err error) {
@@ -71,13 +82,5 @@ func isDataValid(data *GoJSON.JSONWrapper) bool {
 }
 
 func sendBadRequestResponse(rw http.ResponseWriter) {
-	GoServer.SendResponseWithStatus(
-		rw, GoServer.BadRequest, http.StatusBadRequest)
-}
-
-func deleteItemHandler(rw http.ResponseWriter, req *http.Request) {
-	params := GoServer.GetQueryParams(req)
-	id, _ := strconv.Atoi(params["id"])
-	fmt.Println("TODO: Implement delete", id)
-	GoServer.SendResponseWithStatus(rw, "", http.StatusOK)
+	GoServer.SendResponseWithStatus(rw, GoServer.BadRequest, http.StatusBadRequest)
 }
