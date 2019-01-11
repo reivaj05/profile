@@ -11,11 +11,6 @@ var Endpoints = []*GoServer.Endpoint{
 		Handler: getItemHandler,
 	},
 	&GoServer.Endpoint{
-		Method:  "GET",
-		Path:    "/users/",
-		Handler: getListHandler,
-	},
-	&GoServer.Endpoint{
 		Method:  "POST",
 		Path:    "/users/",
 		Handler: postItemhandler,
@@ -24,10 +19,5 @@ var Endpoints = []*GoServer.Endpoint{
 		Method:  "PUT",
 		Path:    "/users/{id:[0-9]+}",
 		Handler: putItemHandler,
-	},
-	&GoServer.Endpoint{
-		Method:  "DELETE",
-		Path:    "/users/{id:[0-9]+}",
-		Handler: deleteItemHandler,
 	},
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
+	"github.com/reivaj05/GoJSON"
 )
 
 type User struct {
@@ -16,17 +17,22 @@ type User struct {
 	Translation string `gorm:"type:text;not_null"`
 }
 
-func newUser() (*User, error) {
-	fmt.Prinln("TODO: Implement create user")
+func newUser(data *GoJSON.JSONWrapper) (*User, error) {
+	fmt.Println("TODO: Implement create user")
 	return &User{}, nil
 }
 
-func (user *User) update() error {
-	fmt.Prinln("TODO: Implement update user")
+func getUser(id int) (*User, error) {
+	fmt.Println("TODO: Implement get user")
+	return &User{}, nil
+}
+
+func (user *User) update(data *GoJSON.JSONWrapper) error {
+	fmt.Println("TODO: Implement update user")
 	return nil
 }
 
 func (user *User) toJSON() string {
-	fmt.Prinln("TODO: Implement user to json")
+	fmt.Println("TODO: Implement user to json")
 	return ""
 }
