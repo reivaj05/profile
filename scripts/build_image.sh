@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IMAGE_NAME=profile
-BRANCH_NAME=$TRAVIS_BRANCH
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
 if [ $BRANCH_NAME == "master" ]; then
 	BRANCH_NAME="latest"
