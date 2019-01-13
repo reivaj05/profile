@@ -7,6 +7,10 @@ if [ $BRANCH_NAME == "master" ]; then
 	BRANCH_NAME="latest"
 fi
 
+if [ $BRANCH_NAME == "HEAD" ]; then
+	BRANCH_NAME="latest"
+fi
+
 if [ -z $DOCKER_USERNAME ]; then
 	echo "Missing DOCKER_USERNAME env var"
 	exit 1
