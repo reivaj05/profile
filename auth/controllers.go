@@ -9,25 +9,24 @@ import (
 )
 
 func loginHandler(rw http.ResponseWriter, req *http.Request) {
-	fmt.Println("TODO: Implement login")
 	data, err := getJSONData(req)
 	if err != nil {
-		// GoServer.SendResponseWithStatus(rw, "Error reading data", http.StatusBadRequest)
+		sendBadRequestResponse(rw)
 		return
 	}
-	if err := validateLoginData(data); err != nil {
-		// GoServer.SendResponseWithStatus(rw, "", http.StatusBadRequest)
+	if !hasDataCredentials(data) {
+		sendBadRequestResponse(rw)
 		return
 	}
 	if err := login(data); err != nil {
-		// GoServer.SendResponseWithStatus(rw, "", http.StatusInternalServerError)
+		GoServer.SendResponseWithStatus(rw, fmt.Sprintf(`{"error": "%s"}`, err.Error()), http.StatusBadRequest)
 	} else {
-		GoServer.SendResponseWithStatus(rw, "success", http.StatusOK)
+		GoServer.SendResponseWithStatus(rw, "", http.StatusOK)
 	}
 }
 
-func validateLoginData(data *GoJSON.JSONWrapper) error {
-	return nil
+func hasDataCredentials(data *GoJSON.JSONWrapper) bool {
+	return data.HasPath("email") && data.HasPath("password")
 }
 
 func logoutHandler(rw http.ResponseWriter, req *http.Request) {

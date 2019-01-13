@@ -1,11 +1,6 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/reivaj05/profile/auth"
-	"github.com/reivaj05/profile/db"
-	"github.com/reivaj05/profile/users"
 
 	"github.com/reivaj05/GoConfig"
 	"github.com/reivaj05/GoLogger"
@@ -13,7 +8,7 @@ import (
 )
 
 const (
-	processName = "profile"
+	processName = "example"
 )
 
 func main() {
@@ -22,7 +17,6 @@ func main() {
 }
 
 func setup() {
-	db.StartDB(&users.User{})
 	startConfig()
 	startLogger()
 }
@@ -72,7 +66,6 @@ func getLogLevel() int {
 
 func process() {
 	port := GoConfig.GetConfigStringValue("port")
-	fmt.Println("Starting server")
 	if err := GoServer.Start(port, createEndpoints()); err != nil {
 		finishExecution("Error while starting server", map[string]interface{}{
 			"error": err.Error(),
@@ -81,8 +74,7 @@ func process() {
 }
 
 func createEndpoints() (endpoints []*GoServer.Endpoint) {
-	endpoints = append(endpoints, auth.Endpoints...)
-	endpoints = append(endpoints, users.Endpoints...)
+	endpoints = append(endpoints, Endpoints...)
 	return
 }
 
