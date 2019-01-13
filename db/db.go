@@ -9,14 +9,8 @@ import (
 	"github.com/reivaj05/GoLogger"
 )
 
-type dbClientInterface interface {
-	First(interface{}, ...interface{}) *gorm.DB
-	Create(interface{}) *gorm.DB
-	Close() error
-}
-
 type dbObj struct {
-	Client dbClientInterface
+	Client *gorm.DB
 }
 
 var DB *dbObj

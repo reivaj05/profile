@@ -7,7 +7,7 @@ import (
 var Endpoints = []*GoServer.Endpoint{
 	&GoServer.Endpoint{
 		Method:  "GET",
-		Path:    "/users/{id:[0-9]+}",
+		Path:    "/users/{id:[0-9]+}/",
 		Handler: getItemHandler,
 	},
 	&GoServer.Endpoint{
@@ -17,7 +17,7 @@ var Endpoints = []*GoServer.Endpoint{
 	},
 	&GoServer.Endpoint{
 		Method:  "PUT",
-		Path:    "/users/{id:[0-9]+}",
+		Path:    "/users/{id:[0-9]+}/",
 		Handler: putItemHandler,
 	},
 }

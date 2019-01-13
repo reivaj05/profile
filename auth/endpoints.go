@@ -12,17 +12,7 @@ var Endpoints = []*GoServer.Endpoint{
 	},
 	&GoServer.Endpoint{
 		Method:  "POST",
-		Path:    "/auth/logout/",
-		Handler: logoutHandler,
-	},
-	&GoServer.Endpoint{
-		Method:  "POST",
 		Path:    "/auth/reset_password/",
 		Handler: resetPasswordHandler,
-	},
-	&GoServer.Endpoint{
-		Method:  "POST",
-		Path:    "/auth/signup/",
-		Handler: signupHandler,
 	},
 }

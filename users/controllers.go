@@ -10,13 +10,12 @@ import (
 )
 
 func getItemHandler(rw http.ResponseWriter, req *http.Request) {
-	fmt.Println("TODO: Implement get")
 	params := GoServer.GetQueryParams(req)
 	id, _ := strconv.Atoi(params["id"])
 	if user, err := getUser(id); err != nil {
 		GoServer.SendResponseWithStatus(rw, "error", http.StatusNotFound)
 	} else {
-		GoServer.SendResponseWithStatus(rw, user.toJSON(), http.StatusOK)
+		GoServer.SendResponseWithStatus(rw, user.ToJSON(), http.StatusOK)
 	}
 }
 
@@ -33,7 +32,7 @@ func postItemhandler(rw http.ResponseWriter, req *http.Request) {
 	if user, err := newUser(data); err != nil {
 		GoServer.SendResponseWithStatus(rw, fmt.Sprintf(`{"error": "%s"}`, err.Error()), http.StatusBadRequest)
 	} else {
-		GoServer.SendResponseWithStatus(rw, user.toJSON(), http.StatusCreated)
+		GoServer.SendResponseWithStatus(rw, user.ToJSON(), http.StatusCreated)
 	}
 }
 
@@ -49,11 +48,6 @@ func putItemHandler(rw http.ResponseWriter, req *http.Request) {
 	}
 	params := GoServer.GetQueryParams(req)
 	id, _ := strconv.Atoi(params["id"])
-	fmt.Println("TODO: Implement put", id)
-	// if !isDataValid(data) {
-	// 	sendBadRequestResponse(rw)
-	// 	return
-	// }
 	if user, err := getUser(id); err != nil {
 		GoServer.SendResponseWithStatus(rw, "error", http.StatusNotFound)
 	} else {
@@ -65,7 +59,7 @@ func updateUser(rw http.ResponseWriter, user *User, data *GoJSON.JSONWrapper) {
 	if err := user.update(data); err != nil {
 		GoServer.SendResponseWithStatus(rw, "error", http.StatusInternalServerError)
 	} else {
-		GoServer.SendResponseWithStatus(rw, user.toJSON(), http.StatusOK)
+		GoServer.SendResponseWithStatus(rw, user.ToJSON(), http.StatusOK)
 	}
 }
 

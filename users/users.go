@@ -2,7 +2,6 @@ package users
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -14,7 +13,7 @@ import (
 
 type User struct {
 	gorm.Model
-	Email     string `gorm:"type:varchar(50);not_null,unique" json:"email"`
+	Email     string `gorm:"type:varchar(50);not_null;unique" json:"email"`
 	Password  string `gorm:"type:varchar(150);not_null"`
 	FirstName string `gorm:"type:varchar(50)" json:"firstName"`
 	LastName  string `gorm:"type:varchar(50)" json:"lastName"`
@@ -38,16 +37,24 @@ func newUser(data *GoJSON.JSONWrapper) (*User, error) {
 }
 
 func getUser(id int) (*User, error) {
-	fmt.Println("TODO: Implement get user")
-	return &User{}, nil
+	var user User
+	err := db.DB.Client.First(&user, "ID = ?", id).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
 
 func (user *User) update(data *GoJSON.JSONWrapper) error {
-	fmt.Println("TODO: Implement update user")
-	return nil
+	user.Email, _ = data.GetStringFromPath("email")
+	user.FirstName, _ = data.GetStringFromPath("firstName")
+	user.LastName, _ = data.GetStringFromPath("lastName")
+	user.Address, _ = data.GetStringFromPath("address")
+	user.Phone, _ = data.GetStringFromPath("phone")
+	return db.DB.Client.Save(user).Error
 }
 
-func (user *User) toJSON() string {
+func (user *User) ToJSON() string {
 	data, _ := json.Marshal(user)
 	return string(data)
 }
